@@ -1,6 +1,6 @@
 apply plugin: 'war'
 apply plugin: 'java'
-apply plugin: 'application'
+apply plugin: 'idea'
 apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
 
 gretty {
@@ -32,11 +32,4 @@ dependencies {
     compile group: 'io.netty', name: 'netty-handler', version: nettyVersion
 
     testCompile 'junit:junit:4.11'
-}
-
-test {
-    testLogging {
-        // Show that tests are run in the command-line output
-        events 'started', 'passed'
-    }
 }
