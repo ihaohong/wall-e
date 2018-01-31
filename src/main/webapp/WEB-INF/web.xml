@@ -1,0 +1,31 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+    <display-name>Archetype Created Web Application</display-name>
+
+    <!--<filter>-->
+        <!--<filter-name>hellofilter</filter-name>-->
+        <!--<filter-class>com.tenbagger.framework.HelloFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>bootstrap</param-name>-->
+            <!--<param-value>com.tenbagger.web.App</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>hellofilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <servlet>
+        <servlet-name>helloservlet</servlet-name>
+        <servlet-class>hello.HelloServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>helloservlet</servlet-name>
+        <url-pattern>/hello-servlet</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>
