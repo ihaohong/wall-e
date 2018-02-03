@@ -4,6 +4,7 @@ import model.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.CastUtil;
+import util.DatabaseHelper;
 import util.PropsUtil;
 
 import java.sql.*;
@@ -13,28 +14,7 @@ import java.util.Map;
 import java.util.Properties;
 
 public class CustomerService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PropsUtil.class);
-
-    private static final String DRIVER;
-    private static final String URL;
-    private static final String USERNAME;
-    private static final String PASSWORD;
-
-    static {
-        Properties conf = PropsUtil.loadProps("config.properties");
-        DRIVER = conf.getProperty("jdbc.driver");
-        URL = conf.getProperty("jdbc.url");
-        USERNAME = conf.getProperty("jdbc.username");
-        PASSWORD = conf.getProperty("jdbc.password");
-
-        try {
-            Class.forName(DRIVER);
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("can not load jdbc driver", e);
-        }
-    }
-
-//    DailyRollingFileAppender
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
     public List<Customer> getCustomerList() {
         Connection conn = null;
@@ -42,11 +22,10 @@ public class CustomerService {
         try {
             List<Customer> customerList = new ArrayList<Customer>();
             String sql = "SELECT * FROM walle_customer";
-            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            conn = DatabaseHelper.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             ResultSet rs = stmt.executeQuery();
-
 
             while (rs.next()) {
                 Customer customer = new Customer();
@@ -64,13 +43,7 @@ public class CustomerService {
         } catch (SQLException e) {
             LOGGER.error("execute sql failure", e);
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    LOGGER.error("close connection failure", e);
-                }
-            }
+            DatabaseHelper.closeConnection(conn);
         }
 
         return null;
