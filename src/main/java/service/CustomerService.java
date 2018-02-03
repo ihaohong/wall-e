@@ -17,36 +17,9 @@ public class CustomerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
     public List<Customer> getCustomerList() {
-        Connection conn = null;
+        String sql = "SELECT * FROM walle_customer";
 
-        try {
-            List<Customer> customerList = new ArrayList<Customer>();
-            String sql = "SELECT * FROM walle_customer";
-            conn = DatabaseHelper.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Customer customer = new Customer();
-                customer.setId(rs.getLong("id"));
-                customer.setName(rs.getString("name"));
-                customer.setContact(rs.getString("contact"));
-                customer.setTelephone(rs.getString("telephone"));
-                customer.setEmail(rs.getString("email"));
-                customer.setRemark(rs.getString("remark"));
-
-                customerList.add(customer);
-            }
-
-            return customerList;
-        } catch (SQLException e) {
-            LOGGER.error("execute sql failure", e);
-        } finally {
-            DatabaseHelper.closeConnection(conn);
-        }
-
-        return null;
+        return DatabaseHelper.queryEntityList(Customer.class, sql);
     }
 
     public Customer getCustomer(long id) {
