@@ -1,29 +1,9 @@
 
 
-<web-app>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_3_0.xsd"
+         version="3.0">
     <display-name>Archetype Created Web Application</display-name>
-
-    <!--<filter>-->
-        <!--<filter-name>hellofilter</filter-name>-->
-        <!--<filter-class>com.tenbagger.framework.HelloFilter</filter-class>-->
-        <!--<init-param>-->
-            <!--<param-name>bootstrap</param-name>-->
-            <!--<param-value>com.tenbagger.web.App</param-value>-->
-        <!--</init-param>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-        <!--<filter-name>hellofilter</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
-
-    <servlet>
-        <servlet-name>helloservlet</servlet-name>
-        <servlet-class>hello.HelloServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>helloservlet</servlet-name>
-        <url-pattern>/hello-servlet</url-pattern>
-    </servlet-mapping>
-
 
 </web-app>
