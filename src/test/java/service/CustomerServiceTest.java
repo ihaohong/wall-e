@@ -9,7 +9,9 @@ import util.DatabaseHelper;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CustomerServiceTest {
     private final CustomerService customerService;
@@ -30,4 +32,25 @@ public class CustomerServiceTest {
 
         Assert.assertEquals(2, customerList.size());
     }
+
+    @Test
+    public void getCustomerTest() throws Exception {
+        long id = 2;
+        Customer customer = customerService.getCustomer(id);
+        Assert.assertEquals("韩梅梅", customer.getName());
+    }
+
+    @Test
+    public void createCustomerTest() throws Exception {
+        Map<String, Object> fieldMap = new HashMap<String, Object>();
+        fieldMap.put("name", "customer100");
+        fieldMap.put("contact", "John");
+        fieldMap.put("telephone", "135");
+
+        boolean result = customerService.createCustomer(fieldMap);
+
+        Assert.assertTrue(result);
+    }
+
+
 }

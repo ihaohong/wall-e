@@ -10,4 +10,8 @@ public class Customer {
     private String telephone;
     private String email;
     private String remark;
+
+    public static String tableName() {
+        return "walle_customer";
+    }
 }

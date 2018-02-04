@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -198,7 +199,14 @@ public class DatabaseHelper {
     }
 
     private static <T> String getTableName(Class<?> entityClass) {
-        return entityClass.getSimpleName();
+        try {
+            Method method = entityClass.getMethod("tableName");
+            Object o = method.invoke(null);
+
+            return (String) o;
+        } catch (Exception e) {
+            return entityClass.getSimpleName();
+        }
     }
 
     public static void executeSqlFile(String filePath) {
