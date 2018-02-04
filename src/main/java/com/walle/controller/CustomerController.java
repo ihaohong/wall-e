@@ -1,6 +1,7 @@
 package com.walle.controller;
 
 import com.walle.framework.annotation.Action;
+import com.walle.framework.annotation.Controller;
 import com.walle.framework.annotation.Inject;
 import com.walle.framework.bean.Param;
 import com.walle.framework.bean.View;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * @author haohong
  */
+@Controller
 public class CustomerController {
     @Inject
     private CustomerService customerService;
