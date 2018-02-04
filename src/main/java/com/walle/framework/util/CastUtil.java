@@ -1,4 +1,4 @@
-package com.walle.util;
+package com.walle.framework.util;
 
 public class CastUtil {
     public static String castString(Object obj) {

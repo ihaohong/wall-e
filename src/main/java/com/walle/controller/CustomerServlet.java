@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author haohohong
  */
-@WebServlet("/customer")
+@WebServlet("/customer2")
 public class CustomerServlet extends HttpServlet {
     private CustomerService customerService;
 

@@ -4,7 +4,7 @@ import com.walle.model.Customer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import com.walle.util.DatabaseHelper;
+import com.walle.framework.helper.DatabaseHelper;
 
 import java.util.HashMap;
 import java.util.List;

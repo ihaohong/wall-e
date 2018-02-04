@@ -1,5 +1,8 @@
-package com.walle.util;
+package com.walle.framework.helper;
 
+import com.walle.framework.ConfigConstant;
+import com.walle.framework.util.CollectionUtil;
+import com.walle.framework.util.PropsUtil;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -38,18 +41,17 @@ public class DatabaseHelper {
 
         QUERY_RUNNER = new QueryRunner();
 
-        Properties conf = PropsUtil.loadProps("config.properties");
-        String driver = conf.getProperty("jdbc.driver");
-        String url = conf.getProperty("jdbc.url");
-        String username = conf.getProperty("jdbc.username");
-        String password = conf.getProperty("jdbc.password");
+        Properties conf = PropsUtil.loadProps(ConfigConstant.CONFIG_FILE);
+        String driver = conf.getProperty(ConfigConstant.JDBC_DRIVER);
+        String url = conf.getProperty(ConfigConstant.JDBC_URL);
+        String username = conf.getProperty(ConfigConstant.JDBC_USERNAME);
+        String password = conf.getProperty(ConfigConstant.JDBC_PASSWORD);
 
         DATA_SOURCE = new BasicDataSource();
         DATA_SOURCE.setDriverClassName(driver);
         DATA_SOURCE.setUrl(url);
         DATA_SOURCE.setUsername(username);
         DATA_SOURCE.setPassword(password);
-
     }
 
     public static Connection getConnection() {

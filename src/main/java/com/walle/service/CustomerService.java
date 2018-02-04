@@ -3,7 +3,7 @@ package com.walle.service;
 import com.walle.model.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.walle.util.DatabaseHelper;
+import com.walle.framework.helper.DatabaseHelper;
 
 import java.util.List;
 import java.util.Map;

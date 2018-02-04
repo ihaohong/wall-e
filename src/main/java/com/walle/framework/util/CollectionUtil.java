@@ -1,4 +1,4 @@
-package com.walle.util;
+package com.walle.framework.util;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
