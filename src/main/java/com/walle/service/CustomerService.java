@@ -1,17 +1,12 @@
-package service;
+package com.walle.service;
 
-import model.Customer;
+import com.walle.model.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.CastUtil;
-import util.DatabaseHelper;
-import util.PropsUtil;
+import com.walle.util.DatabaseHelper;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 public class CustomerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);

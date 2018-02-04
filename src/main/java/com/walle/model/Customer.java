@@ -1,4 +1,4 @@
-package model;
+package com.walle.model;
 
 import lombok.Data;
 

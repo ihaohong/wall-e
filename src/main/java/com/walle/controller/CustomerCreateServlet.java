@@ -1,4 +1,4 @@
-package controller;
+package com.walle.controller;
 
 import javax.servlet.http.HttpServlet;
 

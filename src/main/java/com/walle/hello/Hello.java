@@ -1,4 +1,4 @@
-package hello;
+package com.walle.hello;
 
 public class Hello {
 	public static String main() {

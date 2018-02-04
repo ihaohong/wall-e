@@ -1,8 +1,7 @@
-package hello;
+package com.walle.hello;
 
 import static org.junit.Assert.*;
 import org.junit.*;
-import junit.framework.TestCase;
 
 public class HelloTest{
     @Test

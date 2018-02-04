@@ -1,7 +1,7 @@
-package controller;
+package com.walle.controller;
 
-import model.Customer;
-import service.CustomerService;
+import com.walle.model.Customer;
+import com.walle.service.CustomerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

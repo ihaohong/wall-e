@@ -5,14 +5,12 @@ apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.p
 
 gretty {
     httpPort = 8081
-//    serlvetContainer = 'jetty9'
     contextPath = '/'
 }
 
-jar {
-    baseName = 'wall-e'
-    version = '0.1.0'
-}
+group = 'com.walle'
+version = '0.1.0'
+
 
 repositories {
     maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
