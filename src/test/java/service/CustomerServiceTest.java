@@ -4,7 +4,11 @@ import model.Customer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import util.DatabaseHelper;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class CustomerServiceTest {
@@ -15,8 +19,9 @@ public class CustomerServiceTest {
     }
 
     @Before
-    public void init() {
-
+    public void init() throws Exception {
+        String file = "sql/customer_init.sql";
+        DatabaseHelper.executeSqlFile(file);
     }
 
     @Test
