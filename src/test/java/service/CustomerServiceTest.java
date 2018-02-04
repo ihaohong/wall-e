@@ -52,5 +52,21 @@ public class CustomerServiceTest {
         Assert.assertTrue(result);
     }
 
+    @Test
+    public void updateCustomerTest() throws Exception {
+        long id = 2;
+        Map<String, Object> fieldMap = new HashMap<String, Object>();
+        fieldMap.put("contact", "Eric");
+        boolean result = customerService.updateCustomer(id, fieldMap);
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void deleteCustomerTest() throws Exception {
+        long id = 1;
+        boolean result = customerService.deleteCustomer(id);
+        Assert.assertTrue(result);
+    }
+
 
 }
