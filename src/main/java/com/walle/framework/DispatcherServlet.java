@@ -74,43 +74,43 @@ public class DispatcherServlet extends HttpServlet {
                         }
                     }
                 }
+            }
 
-                Param param = new Param(paramMap);
+            Param param = new Param(paramMap);
 
-                Method actionMethod = handler.getActionMethod();
-                Object result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);
+            Method actionMethod = handler.getActionMethod();
+            Object result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);
 
-                if (result instanceof View) {
-                    View view = (View) result;
-                    String path = view.getPath();
+            if (result instanceof View) {
+                View view = (View) result;
+                String path = view.getPath();
 
-                    if (StringUtil.isNotEmpty(path)) {
-                        if (path.startsWith("/")) {
-                            response.sendRedirect(request.getContextPath() + path);
-                        } else {
-                            Map<String, Object> model = view.getModel();
-                            for (Map.Entry<String, Object> entry : model.entrySet()) {
-                                request.setAttribute(entry.getKey(), entry.getValue());
-                            }
-
-                            request.getRequestDispatcher(ConfigHelper.getAppJspPath() + path).forward(request, response);
+                if (StringUtil.isNotEmpty(path)) {
+                    if (path.startsWith("/")) {
+                        response.sendRedirect(request.getContextPath() + path);
+                    } else {
+                        Map<String, Object> model = view.getModel();
+                        for (Map.Entry<String, Object> entry : model.entrySet()) {
+                            request.setAttribute(entry.getKey(), entry.getValue());
                         }
+
+                        request.getRequestDispatcher(ConfigHelper.getAppJspPath() + path).forward(request, response);
                     }
-                } else if (result instanceof Data) {
-                    Data data = (Data) result;
-                    Object model = data.getModel();
+                }
+            } else if (result instanceof Data) {
+                Data data = (Data) result;
+                Object model = data.getModel();
 
-                    if (model != null) {
-                        response.setContentType("application/json");
-                        response.setCharacterEncoding("UTF-8");
+                if (model != null) {
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
 
-                        PrintWriter writer = response.getWriter();
-                        String json = JsonUtil.toJson(model);
+                    PrintWriter writer = response.getWriter();
+                    String json = JsonUtil.toJson(model);
 
-                        writer.write(json);
-                        writer.flush();
-                        writer.close();
-                    }
+                    writer.write(json);
+                    writer.flush();
+                    writer.close();
                 }
             }
         }
