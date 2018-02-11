@@ -1,9 +1,6 @@
 package com.walle.framework;
 
-import com.walle.framework.helper.BeanHepler;
-import com.walle.framework.helper.ClassHelper;
-import com.walle.framework.helper.ControllerHelper;
-import com.walle.framework.helper.IocHelper;
+import com.walle.framework.helper.*;
 import com.walle.framework.util.ClassUtil;
 
 /**
@@ -14,6 +11,7 @@ public final class HelperLoader {
         Class<?>[] classList = {
                 ClassHelper.class,
                 BeanHepler.class,
+                AopHelper.class,
                 IocHelper.class,
                 ControllerHelper.class,
         };
