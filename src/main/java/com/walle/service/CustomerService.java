@@ -1,6 +1,7 @@
 package com.walle.service;
 
 import com.walle.framework.annotation.Service;
+import com.walle.framework.annotation.Transcation;
 import com.walle.model.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +25,17 @@ public class CustomerService {
         return DatabaseHelper.queryEntity(Customer.class, sql, id);
     }
 
+    @Transcation
     public boolean createCustomer(Map<String, Object> fieldMap) {
         return DatabaseHelper.insertEntity(Customer.class, fieldMap);
     }
 
+    @Transcation
     public boolean updateCustomer(long id, Map<String, Object> fieldMap) {
         return DatabaseHelper.updateEntity(Customer.class, id, fieldMap);
     }
 
+    @Transcation
     public boolean deleteCustomer(long id) {
         return DatabaseHelper.deleteEntity(Customer.class, id);
     }
