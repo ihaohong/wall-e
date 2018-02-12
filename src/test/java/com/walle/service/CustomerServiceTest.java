@@ -1,5 +1,6 @@
 package com.walle.service;
 
+import com.walle.framework.HelperLoader;
 import com.walle.model.Customer;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,6 +22,8 @@ public class CustomerServiceTest {
     public void init() throws Exception {
         String file = "sql/customer_init.sql";
         DatabaseHelper.executeSqlFile(file);
+
+        HelperLoader.init();
     }
 
     @Test

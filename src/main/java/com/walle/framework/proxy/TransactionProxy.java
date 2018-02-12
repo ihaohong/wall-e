@@ -1,7 +1,6 @@
 package com.walle.framework.proxy;
 
-import com.walle.framework.annotation.Transcation;
-import com.walle.framework.bean.Data;
+import com.walle.framework.annotation.Transaction;
 import com.walle.framework.helper.DatabaseHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,7 @@ public class TransactionProxy implements Proxy {
         boolean flag = FLAG_HOLDER.get();
         Method method = proxyChain.getTargetMethod();
 
-        if (!flag && method.isAnnotationPresent(Transcation.class)) {
+        if (!flag && method.isAnnotationPresent(Transaction.class)) {
             FLAG_HOLDER.set(true);
 
             try {
