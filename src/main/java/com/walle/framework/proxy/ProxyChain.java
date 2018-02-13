@@ -1,6 +1,8 @@
 package com.walle.framework.proxy;
 
 import net.sf.cglib.proxy.MethodProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import java.util.List;
  * @author haohong
  */
 public class ProxyChain {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProxyChain.class);
+
     private final Class<?> targetClass;
     private final Object targetObject;
     private final Method targetMethod;

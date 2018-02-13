@@ -31,11 +31,6 @@ public class DatabaseHelper {
 
     private static final BasicDataSource DATA_SOURCE;
 
-//    private static final String DRIVER;
-//    private static final String URL;
-//    private static final String USERNAME;
-//    private static final String PASSWORD;
-
     static {
         CONNECTION_HOLDER = new ThreadLocal<Connection>();
 
@@ -70,21 +65,6 @@ public class DatabaseHelper {
         return conn;
     }
 
-    public static void closeConnection() {
-        Connection conn = CONNECTION_HOLDER.get();
-
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                LOGGER.error("close connection failure", e);
-                throw new RuntimeException("close connection failure", e);
-            } finally {
-                CONNECTION_HOLDER.remove();
-            }
-        }
-    }
-
     public static <T> List<T> queryEntityList(Class<T> entityClass, String sql, Object... params) {
         List<T> entityList;
 
@@ -94,8 +74,6 @@ public class DatabaseHelper {
         } catch (SQLException e) {
             LOGGER.error("query entity list failure", e);
             throw new RuntimeException(e);
-        } finally {
-            closeConnection();
         }
 
         return entityList;
@@ -110,8 +88,6 @@ public class DatabaseHelper {
         } catch (SQLException e) {
             LOGGER.error("query entity failure", e);
             throw new RuntimeException(e);
-        } finally {
-            closeConnection();
         }
 
         return entity;
@@ -139,8 +115,6 @@ public class DatabaseHelper {
             rows = QUERY_RUNNER.update(conn, sql, params);
         } catch (SQLException e) {
             LOGGER.error("execute update failure", e);
-        } finally {
-            closeConnection();
         }
 
         return rows;
@@ -252,8 +226,7 @@ public class DatabaseHelper {
                 LOGGER.error("commit transaction failure", e);
                 throw new RuntimeException(e);
             } finally {
-//                CONNECTION_HOLDER.remove();
-                closeConnection();
+                CONNECTION_HOLDER.remove();
             }
         }
     }
@@ -269,8 +242,7 @@ public class DatabaseHelper {
                 LOGGER.error("rollback transaction failure");
                 throw new RuntimeException(e);
             } finally {
-//                CONNECTION_HOLDER.remove();
-                closeConnection();
+                CONNECTION_HOLDER.remove();
             }
         }
     }
