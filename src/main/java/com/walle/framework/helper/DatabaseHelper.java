@@ -251,6 +251,9 @@ public class DatabaseHelper {
             } catch (SQLException e) {
                 LOGGER.error("commit transaction failure", e);
                 throw new RuntimeException(e);
+            } finally {
+//                CONNECTION_HOLDER.remove();
+                closeConnection();
             }
         }
     }
@@ -266,7 +269,8 @@ public class DatabaseHelper {
                 LOGGER.error("rollback transaction failure");
                 throw new RuntimeException(e);
             } finally {
-                CONNECTION_HOLDER.remove();
+//                CONNECTION_HOLDER.remove();
+                closeConnection();
             }
         }
     }
