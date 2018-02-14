@@ -7,6 +7,7 @@ import com.walle.framework.bean.View;
 import com.walle.framework.helper.BeanHepler;
 import com.walle.framework.helper.ConfigHelper;
 import com.walle.framework.helper.ControllerHelper;
+import com.walle.framework.helper.ServletHelper;
 import com.walle.framework.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,84 +46,90 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String requestMethod = request.getMethod().toLowerCase();
-        String requestPath = request.getPathInfo();
+        ServletHelper.init(request, response);
 
-        Handler handler = ControllerHelper.getHandler(requestMethod, requestPath);
+        try {
+            String requestMethod = request.getMethod().toLowerCase();
+            String requestPath = request.getPathInfo();
 
-        if (handler != null) {
-            Class<?> controllerClass = handler.getControllerClass();
-            Object controllerBean = BeanHepler.getBean(controllerClass);
+            Handler handler = ControllerHelper.getHandler(requestMethod, requestPath);
 
-            Map<String, Object> paramMap = new HashMap<String, Object>();
-            Enumeration<String> paramNames = request.getParameterNames();
+            if (handler != null) {
+                Class<?> controllerClass = handler.getControllerClass();
+                Object controllerBean = BeanHepler.getBean(controllerClass);
 
-            while (paramNames.hasMoreElements()) {
-                String paramName = paramNames.nextElement();
-                String paramValue = request.getParameter(paramName);
-                paramMap.put(paramName, paramValue);
-            }
+                Map<String, Object> paramMap = new HashMap<String, Object>();
+                Enumeration<String> paramNames = request.getParameterNames();
 
-            String body = CodeUtil.decodeURL(StreamUtil.getString(request.getInputStream()));
+                while (paramNames.hasMoreElements()) {
+                    String paramName = paramNames.nextElement();
+                    String paramValue = request.getParameter(paramName);
+                    paramMap.put(paramName, paramValue);
+                }
 
-            if (StringUtil.isNotEmpty(body)) {
-                String[] params = StringUtil.splitString(body, "&");
-                if (ArrayUtil.isNotEmpty(params)) {
-                    for (String param : params) {
-                        String[] array = StringUtil.splitString(param, "=");
+                String body = CodeUtil.decodeURL(StreamUtil.getString(request.getInputStream()));
 
-                        if (ArrayUtil.isNotEmpty(array) && array.length == 2) {
-                            String paramName = array[0];
-                            String paramValue = array[1];
-                            paramMap.put(paramName, paramValue);
+                if (StringUtil.isNotEmpty(body)) {
+                    String[] params = StringUtil.splitString(body, "&");
+                    if (ArrayUtil.isNotEmpty(params)) {
+                        for (String param : params) {
+                            String[] array = StringUtil.splitString(param, "=");
+
+                            if (ArrayUtil.isNotEmpty(array) && array.length == 2) {
+                                String paramName = array[0];
+                                String paramValue = array[1];
+                                paramMap.put(paramName, paramValue);
+                            }
                         }
                     }
                 }
-            }
 
-            Param param = new Param(paramMap);
+                Param param = new Param(paramMap);
 
-            Method actionMethod = handler.getActionMethod();
+                Method actionMethod = handler.getActionMethod();
 
-            Object result;
-            if (param.isEmpty()) {
-                result = ReflectionUtil.invokeMethod(controllerBean, actionMethod);
-            } else {
-                result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);
-            }
+                Object result;
+                if (param.isEmpty()) {
+                    result = ReflectionUtil.invokeMethod(controllerBean, actionMethod);
+                } else {
+                    result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);
+                }
 
-            if (result instanceof View) {
-                View view = (View) result;
-                String path = view.getPath();
+                if (result instanceof View) {
+                    View view = (View) result;
+                    String path = view.getPath();
 
-                if (StringUtil.isNotEmpty(path)) {
-                    if (path.startsWith("/")) {
-                        response.sendRedirect(request.getContextPath() + path);
-                    } else {
-                        Map<String, Object> model = view.getModel();
-                        for (Map.Entry<String, Object> entry : model.entrySet()) {
-                            request.setAttribute(entry.getKey(), entry.getValue());
+                    if (StringUtil.isNotEmpty(path)) {
+                        if (path.startsWith("/")) {
+                            response.sendRedirect(request.getContextPath() + path);
+                        } else {
+                            Map<String, Object> model = view.getModel();
+                            for (Map.Entry<String, Object> entry : model.entrySet()) {
+                                request.setAttribute(entry.getKey(), entry.getValue());
+                            }
+
+                            request.getRequestDispatcher(ConfigHelper.getAppJspPath() + path).forward(request, response);
                         }
+                    }
+                } else if (result instanceof Data) {
+                    Data data = (Data) result;
+                    Object model = data.getModel();
 
-                        request.getRequestDispatcher(ConfigHelper.getAppJspPath() + path).forward(request, response);
+                    if (model != null) {
+                        response.setContentType("application/json");
+                        response.setCharacterEncoding("UTF-8");
+
+                        PrintWriter writer = response.getWriter();
+                        String json = JsonUtil.toJson(model);
+
+                        writer.write(json);
+                        writer.flush();
+                        writer.close();
                     }
                 }
-            } else if (result instanceof Data) {
-                Data data = (Data) result;
-                Object model = data.getModel();
-
-                if (model != null) {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-
-                    PrintWriter writer = response.getWriter();
-                    String json = JsonUtil.toJson(model);
-
-                    writer.write(json);
-                    writer.flush();
-                    writer.close();
-                }
             }
+        } finally {
+            ServletHelper.destroy();
         }
     }
 }
