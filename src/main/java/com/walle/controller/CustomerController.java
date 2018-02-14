@@ -32,14 +32,17 @@ public class CustomerController {
         return new View("customer.jsp").addModel("customerList", customerList);
     }
 
+
+    @Action("get:/customer-detail")
+    public View detail(Param param) {
+        LOGGER.debug(param.toString());
+
+        return new View("customer.jsp");
+//        return new Data(param);
+    }
+
     @Action("get:/customer2")
     public View insert(Param param) {
-        LOGGER.debug("thread :" + Thread.currentThread().getId()
-                + " conn:" + DatabaseHelper.getConnection().toString());
-        LOGGER.debug("thread :" + Thread.currentThread().getId()
-                + " conn:" + DatabaseHelper.getConnection().toString());
-
-
         Map<String, Object> fieldMap = new HashMap<String, Object>();
         fieldMap.put("name", "customer100");
         fieldMap.put("contact", "John");

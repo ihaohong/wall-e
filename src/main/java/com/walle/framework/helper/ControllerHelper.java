@@ -5,6 +5,8 @@ import com.walle.framework.bean.Handler;
 import com.walle.framework.bean.Request;
 import com.walle.framework.util.ArrayUtil;
 import com.walle.framework.util.CollectionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -15,6 +17,8 @@ import java.util.Set;
  * @author haohong
  */
 public class ControllerHelper {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ControllerHelper.class);
+
     private static final Map<Request, Handler> ACTION_MAP = new HashMap<Request, Handler>();
 
     static {

@@ -8,6 +8,8 @@ import com.walle.framework.helper.BeanHepler;
 import com.walle.framework.helper.ConfigHelper;
 import com.walle.framework.helper.ControllerHelper;
 import com.walle.framework.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -29,6 +31,8 @@ import java.util.Map;
  */
 @WebServlet(urlPatterns = "/*", loadOnStartup = 0)
 public class DispatcherServlet extends HttpServlet {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DispatcherServlet.class);
+
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
         HelperLoader.init();
