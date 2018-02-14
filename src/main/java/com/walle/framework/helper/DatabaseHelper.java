@@ -115,6 +115,7 @@ public class DatabaseHelper {
             rows = QUERY_RUNNER.update(conn, sql, params);
         } catch (SQLException e) {
             LOGGER.error("execute update failure", e);
+            throw new RuntimeException(e);
         }
 
         return rows;
