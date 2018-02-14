@@ -27,7 +27,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @Action("get:/customer")
-    public View index(Param param) {
+    public View index() {
         List<Customer> customerList = customerService.getCustomerList();
         return new View("customer.jsp").addModel("customerList", customerList);
     }
@@ -50,7 +50,7 @@ public class CustomerController {
     }
 
     @Action("get:/customer2")
-    public View insert(Param param) {
+    public View insert() {
         Map<String, Object> fieldMap = new HashMap<String, Object>();
         fieldMap.put("name", "customer100");
         fieldMap.put("contact", "John");
