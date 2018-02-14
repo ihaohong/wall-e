@@ -41,6 +41,14 @@ public class CustomerController {
 //        return new Data(param);
     }
 
+    @Action("get:/customer/detail")
+    public Data detail2(Param param) {
+        LOGGER.debug(param.toString());
+
+//        return new View("customer.jsp");
+        return new Data(param);
+    }
+
     @Action("get:/customer2")
     public View insert(Param param) {
         Map<String, Object> fieldMap = new HashMap<String, Object>();
